@@ -1,0 +1,16 @@
+<div class="main">
+     <div class="mask">
+         <div class="card">
+             <div class="header">
+                 Welcome
+                 <div class="user-icon"></div>
+             </div>
+             <div class="body">
+                 <div class="discription">Enter your name</div>
+                 <input placeholder="user name" class="input" type="text" required [(ngModel)]="name" />
+                 <div *ngIf="nameneeded" class="error">name is required</div>
+                 <button (click)="seeList()" class="btn">See List</button>
+             </div>
+         </div>
+     </div>
+</div>

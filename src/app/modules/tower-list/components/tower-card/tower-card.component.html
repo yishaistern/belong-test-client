@@ -1,0 +1,5 @@
+<div *ngIf="tower">
+    <div class="detail"><span class="title-key">Name:</span> {{tower.name}}</div>
+    <div class="detail"><span class="title-key">Floors:</span> {{tower.floors}}</div>
+    <img [src]="(tower.src) ? tower.src : './assets/t4.png'" />
+</div>

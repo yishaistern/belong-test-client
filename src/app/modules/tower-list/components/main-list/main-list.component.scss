@@ -1,0 +1,58 @@
+.header {
+    height: 50px;
+    background-color: aqua;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 15px;
+}
+
+
+
+.main {
+    width: 80vw;
+    max-width: 600px;
+    margin: auto;
+    display: grid;
+    height: calc(100vh - 50px);
+    grid-template-columns: 1fr 2fr;
+    column-gap: 10px;
+    row-gap: 15px;
+}
+
+.card-wrap {
+    padding: 10px;
+    min-width: 0;
+}
+.name-list {
+    min-width: 0;
+}
+.chart-wrap {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+.back-color {
+    background-color: #e1e1e1;
+}
+
+.one-name {
+    position: relative;
+    height: 35px;
+    line-height: 35px;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    padding: 0 8px;
+    border-bottom: 1px solid black;
+    
+}
+
+.inner-name {
+    // display: inline;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    
+}

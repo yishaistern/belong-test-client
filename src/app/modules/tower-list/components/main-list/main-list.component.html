@@ -1,0 +1,16 @@
+<div class="header">
+      {{username | async}}  
+</div>
+<div class="main">
+    <div class="chart-wrap back-color">
+        <app-chart [tower]="pickedTower"></app-chart>
+    </div>
+    <div class="name-list back-color">
+        <div class="one-name" *ngFor="let item of (ids | async)" (click)="pickTower(towers[item])">
+            <div class="inner-name" [attr.title]="towers[item].name">{{towers[item].name}}</div>
+        </div>
+    </div>
+    <div class="card-wrap back-color">
+        <app-tower-card [tower]="pickedTower"></app-tower-card>
+    </div>
+</div>
