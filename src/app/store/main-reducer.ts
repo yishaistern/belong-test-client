@@ -1,5 +1,5 @@
 import { Action, createFeatureSelector, createReducer, createSelector, on } from '@ngrx/store';
-import { AppState, User, UserState } from '../interfaces/model-interface';
+import { AppState, User, MainState } from '../interfaces/model-interface';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import * as actions from './actions';
 
@@ -8,10 +8,11 @@ import * as actions from './actions';
 
 
 
-export const initialState: UserState = {
+export const initialState: MainState = {
   user: {
     userName: ''
-  }
+  },
+  isApiCallRuning: false
 };
 
 const userReducer = createReducer(
@@ -19,28 +20,26 @@ const userReducer = createReducer(
     on(actions.logUser, (state, { newUser }) => {
       return {...state, user: newUser};
     }),
-  //   on(actions.clearuser, (state) => {
-  //     return {...state, currentUser: ''};
-  // }),
-  //   on(actions.editUser, (state, { userEdited }) => {
-  //     return adapter.updateOne(userEdited, state);
-  // }),
-  //   on(actions.pickUser, (state, { userPicked }) => {
-  //     const picked = userPicked.firstName + '_' + userPicked.lastName;
-  //     return {...state, currentUser: picked};
-  // }),
+    on(actions.runCall, (state, { isAlive }) => {
+      return {...state, isApiCallRuning: isAlive};
+    }),
 
 );
 
-export function reducer(state: UserState | undefined, action: Action) {
+export function reducer(state: MainState | undefined, action: Action) {
     return userReducer(state, action);
 }
 
-export const selectFeature = createFeatureSelector<AppState, UserState>('userState');
+export const selectFeature = createFeatureSelector<AppState, MainState>('mainState');
 
 export const selectuserName = createSelector(
   selectFeature,
-  (state: UserState) => state.user.userName
+  (state: MainState) => state.user.userName
+);
+
+export const selectloading = createSelector(
+  selectFeature,
+  (state: MainState) => state.isApiCallRuning
 );
 
 

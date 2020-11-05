@@ -12,6 +12,7 @@ import { UserManageService } from '../../services/user-manage.service';
 export class SginInComponent implements OnInit, OnDestroy {
   dialogSub: Subscription;
   name: string;
+  tryAgain: boolean;
   nameneeded: boolean;
   constructor(private router: Router, private store: Store, private userService: UserManageService) { }
 
@@ -20,15 +21,21 @@ export class SginInComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
   }
 
+
   seeList(): void {
+    this.tryAgain = false;
     this.nameneeded = (this.name) ? false : true;
     if (!this.nameneeded) {
       this.userService.logUser(this.name).subscribe((data) => {
         if (data) {
           this.store.dispatch(logUser({newUser: {userName: this.name}}));
           this.router.navigate(['/tower-list']);
+        } else {
+          this.tryAgain = true;
         }
-      });
+      },
+      (error) => { this.tryAgain = true; }
+      );
     }
   }
 

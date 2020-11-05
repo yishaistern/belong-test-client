@@ -2,30 +2,39 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectuserName } from 'src/app/store/main-reducer';
-import { logUser } from 'src/app/store/actions';
+import { logUser, runCall } from 'src/app/store/actions';
 @Injectable({
   providedIn: 'root'
 })
 export class ApiGatewayService {
   currentUser: string;
-  constructor(private http: HttpClient, private router: Router,  private store: Store) { 
+  constructor(private http: HttpClient, private router: Router,  private store: Store) {
     this.store.select(selectuserName).subscribe(data => {
       this.currentUser = data;
     });
   }
 
   runpostCall(suffix: string, payload: any): Observable<any> {
+    this.store.dispatch(runCall({isAlive: true}));
     let headers: HttpHeaders = new HttpHeaders();
-    headers = new HttpHeaders().append('bearer', window.sessionStorage.getItem('key'));
+    const key = window.sessionStorage.getItem('key');
+    if (key) {
+      headers = headers.set('bearer', key);
+    }
     return this.http.post(environment.prefix + suffix, payload, { headers }).pipe(
       map((data) => {
+        this.store.dispatch(runCall({isAlive: false}));
         this.dispachUser(data);
         this.logOutIfThereIsNoUser(data);
         return data;
+      }),
+      catchError((error) => {
+        this.store.dispatch(runCall({isAlive: false}));
+        return error;
       })
     );
   }

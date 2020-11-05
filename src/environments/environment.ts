@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  prefix: 'http://localhost:3000/'
+  prefix: 'https://belong-server.herokuapp.com/'
 };
 
 /*

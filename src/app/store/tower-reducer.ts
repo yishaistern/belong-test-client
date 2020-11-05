@@ -39,9 +39,6 @@ const towerReducer = createReducer(
     on(actions.pickTwoer, (state, { towerId }) => {
       return {...state, currentTower: towerId};
     }),
-    on(actions.runCall, (state, { done }) => {
-        return {...state, loading: !done};
-  }),
     on(actions.updateTwoer, (state, { tower }) => {
         // tower.changes.wasUpdated = true;
         return adapter.updateOne(tower, {...state, currentTower: tower.id });

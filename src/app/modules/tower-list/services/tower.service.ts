@@ -30,11 +30,8 @@ export class TowerService {
 
 
   runpostCall(suffix: string, payload: any): Observable<any> {
-    this.store.dispatch(runCall({done: false}));
     return this.api.runpostCall(suffix, payload).pipe(
       map((data) => {
-        console.log(data);
-        this.store.dispatch(runCall({done: true}));
         return data;
       })
     );

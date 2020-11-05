@@ -26,11 +26,12 @@ export interface TowerState extends EntityState<User>  {
     loading: boolean;
 }
 
-export interface UserState {
+export interface MainState {
     user: User;
+    isApiCallRuning: boolean;
 }
 
 export interface AppState {
-    userState: UserState;
+    mainState: MainState;
     towers: TowerState;
 }
